@@ -31,12 +31,10 @@ class AuthController extends Controller
             ], 401);
         }
         $user = Auth::guard('web')->user();
-        // dd($user);
         $user->jwt_secret = $token;
         $user->update();
 
         Session::put('jwt_secret', $token);
-        // Session::get('jwt_secret');
 
         return response()->json([
             'status' => 'success',
@@ -78,9 +76,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        dd(Auth::guard('web')->user());
-
-        Auth::logout();
+        Session::flush('jwt_secret');
         return response()->json([
             'status' => 'success',
             'message' => 'Successfully logged out',

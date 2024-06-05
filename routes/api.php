@@ -5,12 +5,13 @@ use App\Http\Controllers\TodoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
+
 Route::group([
-    ['middleware' => 'auth:api', 'except' => ['login', 'register']],
+    ['middleware' => 'auth:api'], 
     'prefix' => 'auth'
 ], function () {
-    Route::post('login', [AuthController::class, 'login']);
-    Route::post('register', [AuthController::class, 'register']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::get('user-profile', [AuthController::class, 'userProfile']);
